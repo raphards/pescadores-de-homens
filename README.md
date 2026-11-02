@@ -54,9 +54,9 @@ Peixes por nível (pontos padrão, ajustáveis):
 | 3 | Dourado | 50 |
 | 4 (fundo) | Pintado | 100 |
 
-## Painel de ajustes (`#/admin`)
+## Painel de ajustes (`/admin` ou `#/admin`)
 
-Abra `http://localhost:5173/#/admin` (ou `.../#/admin` no totem). Dá para ajustar
+Abra `http://localhost:5173/admin` (ou `#/admin`). Dá para ajustar
 sem mexer no código:
 
 - **Tempo** da puxada (segundos)

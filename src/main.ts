@@ -11,9 +11,13 @@ import NameScene from './scenes/NameScene';
 const root = document.getElementById('app');
 if (!root) throw new Error('elemento #app não encontrado');
 
-/** Rota do painel de ajustes: #/admin */
+/** Rota do painel de ajustes: aceita tanto /admin quanto #/admin */
 function currentRoute(): string {
-  return location.hash.replace(/^#\/?/, '').toLowerCase();
+  const hash = location.hash.replace(/^#\/?/, '').toLowerCase();
+  if (hash === 'admin') return 'admin';
+  const path = location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  if (path === 'admin') return 'admin';
+  return '';
 }
 
 function startGame(): void {
@@ -43,3 +47,4 @@ if (currentRoute() === 'admin') {
 }
 
 window.addEventListener('hashchange', () => location.reload());
+window.addEventListener('popstate', () => location.reload());

@@ -114,7 +114,7 @@ export function renderAdmin(root: HTMLElement): void {
             <p class="sub">Painel de ajustes do totem</p>
           </div>
         </div>
-        <a class="btn primary" href="#">▶ Abrir o jogo</a>
+        <a class="btn primary" href="/">▶ Abrir o jogo</a>
       </header>
 
       <div class="grid">
@@ -223,7 +223,7 @@ export function renderAdmin(root: HTMLElement): void {
 
       <p class="hint">
         Rank atual:<br><span class="rank-mini">${rankHtml}</span><br><br>
-        Esta página é aberta pela URL <code>#/admin</code>. Os ajustes ficam salvos neste navegador
+        Esta página pode ser aberta pela URL <code>/admin</code> ou <code>#/admin</code>. Os ajustes ficam salvos neste navegador
         (localStorage) e são lidos no início de cada partida — se salvar em outra aba, a próxima
         pescaria já usa os valores novos.
       </p>
