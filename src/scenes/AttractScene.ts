@@ -7,6 +7,7 @@ import { Ocean } from '../art/ocean';
 import { sfx } from '../audio';
 import { lockInput, offPress, onPress } from '../input';
 import { fmt, topRank } from '../rank';
+import { isStandbyActive } from '../standby';
 import { C, DEPTH, FONT_TITLE, FONT_UI } from '../ui';
 
 export default class AttractScene extends Phaser.Scene {
@@ -232,11 +233,11 @@ export default class AttractScene extends Phaser.Scene {
   }
 
   private ambientCast(): void {
-    if (!this.scene.isActive() || this.leaving) return;
+    if (!this.scene.isActive() || this.leaving || isStandbyActive()) return;
     const f = Phaser.Utils.Array.GetRandom(this.ocean.fishermen);
     f.setPose('windup');
     this.time.delayedCall(420, () => {
-      if (!this.scene.isActive()) return;
+      if (!this.scene.isActive() || isStandbyActive()) return;
       f.setPose('throw');
       sfx.throwNet();
       const ball = this.add.circle(540, 292, 13, 0xdcc79c).setDepth(DEPTH.effects);
@@ -248,8 +249,10 @@ export default class AttractScene extends Phaser.Scene {
         520,
         (x, y) => ball.setPosition(x, y),
         () => {
-          splash(this, ball.x, ball.y);
-          sfx.splash();
+          if (!isStandbyActive()) {
+            splash(this, ball.x, ball.y);
+            sfx.splash();
+          }
           ball.destroy();
         },
         'Sine.easeIn',

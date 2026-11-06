@@ -128,4 +128,7 @@ export const RANK_SIZE = 8;
 /** Volta ao standby depois do resultado */
 export const RESULT_MS = 9000;
 /** Sem interação no nome, volta ao standby */
-export const NAME_IDLE_MS = 30000;
+export const NAME_IDLE_MS = 15000;
+/** Tempo sem interação para entrar o vídeo de standby */
+export const STANDBY_IDLE_MS = 15000;
+

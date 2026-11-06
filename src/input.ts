@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { sfx } from './audio';
+import { installStandby, recordActivity } from './standby';
 
 /**
  * Um único barramento de "apertou o botão".
@@ -15,6 +16,10 @@ export function lockInput(ms = 400): void {
 }
 
 export function emitPress(source: string): void {
+  if (recordActivity()) {
+    lockInput(400);
+    return;
+  }
   if (performance.now() < lockUntil) return;
   bus.emit('press', source);
 }
@@ -33,13 +38,21 @@ function toggleFullscreen(game: Phaser.Game): void {
 }
 
 export function installInput(game: Phaser.Game): void {
+  installStandby(game, () => lockInput(400));
+
   window.addEventListener('keydown', (e) => {
     if (e.repeat) return;
     if (e.key === 'f' || e.key === 'F') {
+      recordActivity();
       toggleFullscreen(game);
       return;
     }
     sfx.unlock();
+    if (recordActivity()) {
+      lockInput(400);
+      e.stopImmediatePropagation();
+      return;
+    }
     emitPress('key');
   });
 
@@ -50,3 +63,4 @@ export function installInput(game: Phaser.Game): void {
 
   game.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 }
+
